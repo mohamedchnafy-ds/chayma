@@ -125,6 +125,12 @@ kbd {
 .barre__marque strong { display: block; font-weight: 600; }
 .barre__marque small { color: var(--encre-tenue); font-size: .74rem; }
 .barre__pied { margin-top: auto; font-size: .74rem; color: var(--encre-tenue); padding: 0 .4rem; }
+.barre__chemin {
+    display: block; margin-top: .2rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .72rem; color: var(--encre-douce);
+    word-break: break-all;
+}
 
 .nav { display: flex; flex-direction: column; gap: 2px; }
 .nav__lien {
@@ -252,6 +258,16 @@ textarea.saisie { resize: vertical; }
 .case input { accent-color: var(--taupe); width: 16px; height: 16px; }
 
 .actions-ligne { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: .5rem 0; }
+
+.emplacement { margin: 0 0 .75rem; display: grid; grid-template-columns: auto 1fr; gap: .2rem .9rem; align-items: baseline; }
+.emplacement dt { font-size: .76rem; color: var(--encre-tenue); }
+.emplacement dd { margin: 0; }
+.chemin {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .8rem; color: var(--encre-douce);
+    background: var(--surface-creuse); padding: .1rem .4rem; border-radius: 4px;
+    word-break: break-all;
+}
 
 /* --- Saisie rapide -------------------------------------------------------------- */
 

@@ -1,0 +1,5 @@
+# Données du cabinet : patients, séances, notes d’honoraires.
+# Ne doivent jamais être publiées ni versionnées.
+/data/
+
+.DS_Store

@@ -37,6 +37,9 @@ self.addEventListener('activate', e => {
 // Reseau d'abord pour recuperer les mises a jour, cache en secours hors ligne.
 self.addEventListener('fetch', e => {
     if (e.request.method !== 'GET') return;
+    // Les donnees du cabinet ne passent jamais par le cache : servir une
+    // ancienne version, ou masquer un echec d'ecriture, serait pire que tout.
+    if (new URL(e.request.url).pathname.includes('/api/')) return;
     e.respondWith(
         fetch(e.request)
             .then(reponse => {

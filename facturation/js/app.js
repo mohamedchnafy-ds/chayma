@@ -97,6 +97,7 @@ async function demarrer() {
 
     document.getElementById('app').hidden = false;
     construireNavigation();
+    annoncerEmplacement();
 
     const route = routeDepuisUrl();
     naviguer(route.id, route.options);
@@ -115,9 +116,27 @@ async function demarrer() {
         if (e.key === 'n' || e.key === 'N') { e.preventDefault(); naviguer('jour'); }
     });
 
-    // Rappel de sauvegarde si aucune copie automatique n'est configuree.
-    if (!db.miroirActif() && db.etat.doc.seances.length > 0) {
+    // En mode « navigateur » seulement : sans copie miroir, vider le cache du
+    // navigateur effacerait tout. En mode « fichier », le serveur local ecrit
+    // deja dans un dossier et tient des copies datees.
+    if (db.modeStockage() === 'navigateur' && !db.miroirActif() && db.etat.doc.seances.length > 0) {
         setTimeout(() => notifier('Pensez à configurer une sauvegarde dans les Paramètres.', 'attention'), 1500);
+    }
+}
+
+/** Le bas de la barre laterale dit ou vivent les donnees, sans avoir a chercher. */
+function annoncerEmplacement() {
+    const pied = document.querySelector('.barre__pied');
+    if (!pied) return;
+    if (db.modeStockage() === 'fichier') {
+        const dossier = db.dossierDonnees() || '';
+        remplir(pied, [
+            el('span', { texte: 'Données enregistrées dans ' }),
+            el('code', { class: 'barre__chemin', texte: dossier.split('/').slice(-2).join('/') || 'data' }),
+        ]);
+        pied.title = db.emplacementDonnees();
+    } else {
+        pied.textContent = 'Données enregistrées dans ce navigateur, sur cet ordinateur.';
     }
 }
 

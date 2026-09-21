@@ -102,6 +102,49 @@ function bloc(titre, contenu, note) {
 // --- Sauvegardes ---------------------------------------------------------------
 
 function blocSauvegarde(rafraichir) {
+    return db.modeStockage() === 'fichier'
+        ? blocSauvegardeFichier(rafraichir)
+        : blocSauvegardeNavigateur(rafraichir);
+}
+
+/** Mode « fichier » : le serveur local ecrit dans un dossier ordinaire. */
+function blocSauvegardeFichier(rafraichir) {
+    const doc = db.etat.doc;
+    const dossier = db.dossierDonnees();
+
+    return bloc('Où sont vos données',
+        el('div', {}, [
+            el('p', { class: 'etat-ok', texte: 'Enregistrement automatique dans un dossier de votre Mac.' }),
+            el('dl', { class: 'emplacement' }, [
+                el('dt', { texte: 'Fichier' }),
+                el('dd', { class: 'chemin', texte: db.emplacementDonnees() }),
+                dossier ? el('dt', { texte: 'Copies datées' }) : null,
+                dossier ? el('dd', { class: 'chemin', texte: `${dossier}/sauvegardes/` }) : null,
+            ]),
+            el('p', { class: 'texte-doux', texte: 'Une copie datée est conservée pour chacun des trente derniers jours d’utilisation. Sauvegarder ce dossier (Time Machine, disque externe) suffit à tout conserver.' }),
+            el('div', { class: 'actions-ligne' }, [
+                el('button', {
+                    class: 'bouton bouton--fantome', type: 'button',
+                    on: {
+                        click: () => {
+                            const date = new Date().toISOString().slice(0, 10);
+                            telecharger(`sauvegarde-cabinet-${date}.json`, db.exporterJson(), 'application/json');
+                            notifier('Sauvegarde téléchargée.');
+                        },
+                    },
+                }, ['Télécharger une copie']),
+                el('button', {
+                    class: 'bouton bouton--fantome', type: 'button',
+                    on: { click: () => importer(rafraichir) },
+                }, ['Restaurer une sauvegarde']),
+            ]),
+            el('p', { class: 'texte-doux', texte: doc.modifieLe ? `Dernière modification : ${new Date(doc.modifieLe).toLocaleString('fr-FR')}` : 'Aucune donnée enregistrée pour l’instant.' }),
+        ]),
+        'Vos données ne quittent jamais cet ordinateur : le serveur qui les enregistre n’écoute que sur cette machine.');
+}
+
+/** Mode « navigateur » : pas de serveur, donc IndexedDB et copie miroir manuelle. */
+function blocSauvegardeNavigateur(rafraichir) {
     const doc = db.etat.doc;
     const etatMiroir = db.miroirActif()
         ? el('p', { class: 'etat-ok' }, ['Copie automatique active vers ', el('strong', { texte: db.nomMiroir() })])
@@ -138,8 +181,10 @@ function blocSauvegarde(rafraichir) {
         }, ['Restaurer une sauvegarde']),
     ]);
 
-    return bloc('Sauvegarde',
+    return bloc('Où sont vos données',
         el('div', {}, [
+            el('p', { class: 'etat-attention', texte: 'Les données sont dans la base interne de ce navigateur, et non dans un dossier.' }),
+            el('p', { class: 'texte-doux', texte: 'Pour qu’elles vivent dans un dossier ordinaire de votre Mac, ouvrez l’outil avec Facturation.command plutôt que depuis cette adresse.' }),
             etatMiroir,
             !db.miroirDisponible()
                 ? el('p', { class: 'texte-doux', texte: 'Ce navigateur ne permet pas la copie automatique dans un fichier. Utilisez Chrome ou Edge, ou téléchargez une sauvegarde régulièrement.' })
