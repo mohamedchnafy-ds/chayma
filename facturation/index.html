@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Outil interne : hors index des moteurs de recherche. -->
+    <meta name="robots" content="noindex, nofollow">
+    <title>Facturation du cabinet — Chayma Dahmani</title>
+    <meta name="description" content="Outil local de facturation et de suivi du cabinet.">
+    <meta name="theme-color" content="#9B8579">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%239B8579'/><path d='M10 9h12M10 15h12M10 21h7' stroke='white' stroke-width='2.4' stroke-linecap='round'/></svg>">
+</head>
+<body>
+    <div id="app" hidden>
+        <aside class="barre">
+            <div class="barre__marque">
+                <span class="barre__logo" aria-hidden="true">CD</span>
+                <span>
+                    <strong>Facturation</strong>
+                    <small>Cabinet de psychologie</small>
+                </span>
+            </div>
+            <nav id="navigation" class="nav" aria-label="Sections de l’outil"></nav>
+            <p class="barre__pied">
+                Données enregistrées uniquement sur cet ordinateur.
+            </p>
+        </aside>
+        <main id="contenu" class="contenu" tabindex="-1"></main>
+    </div>
+
+    <!-- Zone dediee a l'impression des notes d'honoraires. -->
+    <div id="impression" aria-hidden="true"></div>
+
+    <noscript>
+        <p style="padding:2rem;font-family:sans-serif">
+            Cet outil a besoin de JavaScript pour fonctionner.
+        </p>
+    </noscript>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

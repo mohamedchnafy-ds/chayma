@@ -1,0 +1,19 @@
+{
+  "name": "Facturation du cabinet",
+  "short_name": "Facturation",
+  "description": "Notes d’honoraires et suivi d’activité du cabinet de psychologie.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FAF8F6",
+  "theme_color": "#9B8579",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "icone.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
