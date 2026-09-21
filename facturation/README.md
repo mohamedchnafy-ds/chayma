@@ -25,9 +25,19 @@ ouverte pendant le travail ; la fermer arrête tout.
 
 Pratique : glisser `Facturation.command` dans le Dock pour l’avoir sous la main.
 
-> À la première ouverture, macOS peut refuser un fichier téléchargé. Faire un
-> clic droit sur `Facturation.command` → **Ouvrir**, puis confirmer. Une seule
-> fois.
+> **À la première ouverture**, macOS refuse tout fichier venant d’Internet :
+> « Impossible d’ouvrir … développeur non identifié ». C’est attendu — le
+> fichier n’est pas signé par un compte développeur Apple. Deux façons de le
+> débloquer, une seule fois :
+>
+> *Par le Terminal (toutes versions de macOS).* Ouvrir Terminal, taper
+> `xattr -cr ` **avec l’espace final**, glisser le dossier `Cabinet` dans la
+> fenêtre, Entrée. Rien ne s’affiche : c’est fait.
+>
+> *Par les Réglages Système.* Après la tentative refusée : menu  → Réglages
+> Système → Confidentialité et sécurité → section « Sécurité » →
+> **Ouvrir quand même**. Le raccourci clic droit → Ouvrir ne suffit plus sur
+> les versions récentes de macOS.
 >
 > Si un message signale que Python 3 manque : taper `python3` dans le Terminal,
 > macOS propose alors de l’installer en un clic.
